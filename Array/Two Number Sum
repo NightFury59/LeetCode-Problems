@@ -1,0 +1,12 @@
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        hashTable = {}
+
+        for i, num in enumerate(nums):
+            x = target - num
+            if x in hashTable:
+                return [hashTable[x], i]
+
+            hashTable[num] = i
+
+        return[-1,-1]
