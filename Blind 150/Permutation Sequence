@@ -1,0 +1,16 @@
+var getPermutation = function(n, k) {
+    const num = Array.from({length:n}, (_, i) => i+1);
+    const factorial = [1];
+    const result = [];
+    
+    for(let i = 1; i <= num.length; i++) {
+        factorial.push(factorial[i-1] * num[i-1]);
+    }
+    
+    while(num.length) {
+        const idx = Math.ceil(k / factorial[--n]) - 1;
+        result.push(num.splice(idx, 1));
+        k = k % factorial[n] || factorial[n]
+    }
+    return result.join('');
+};
