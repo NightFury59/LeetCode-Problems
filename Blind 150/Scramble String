@@ -1,0 +1,38 @@
+var isScramble = function(s1, s2) {
+  if (s1 === s2) {
+      return true;
+  }
+
+  if (s1.length !== s2.length) {
+      return false;
+  }
+
+  const n = s1.length;
+  const memo = Array.from({ length: n }, () =>
+      Array.from({ length: n }, () => new Array(n + 1).fill(false))
+  );
+
+  for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) {
+          memo[i][j][1] = s1[i] === s2[j];
+      }
+  }
+
+  for (let len = 2; len <= n; len++) {
+      for (let i = 0; i <= n - len; i++) {
+          for (let j = 0; j <= n - len; j++) {
+              for (let k = 1; k < len; k++) {
+                  if (
+                      (memo[i][j][k] && memo[i + k][j + k][len - k]) ||
+                      (memo[i][j + len - k][k] && memo[i + k][j][len - k])
+                  ) {
+                      memo[i][j][len] = true;
+                      break;
+                  }
+              }
+          }
+      }
+  }
+
+  return memo[0][0][n];
+};
