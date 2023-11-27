@@ -1,0 +1,17 @@
+var minPatches = function(nums, n) {
+    let i =0; 
+    let missingNumber = 1;
+    let counter = 0;
+    while(missingNumber <= n){
+        if(nums[i] <= missingNumber){
+            missingNumber = missingNumber + nums[i];
+            i++;
+        }
+        else {
+            missingNumber = 2 * missingNumber;
+            counter++;
+        }
+        
+    }
+    return counter; 
+};
