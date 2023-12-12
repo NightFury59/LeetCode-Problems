@@ -1,0 +1,20 @@
+var calcPow = function(x, n) {
+    if(x === 0) return 0;
+    if(n === 0) return 1;
+    
+    let result = calcPow(x, Math.floor(n/2));
+    result = result * result;
+    
+    if(n % 2) {
+        return x * result;
+    } else {
+        return result;
+    }
+    
+}
+
+var myPow = function(x, n) {
+    const value = calcPow(x, Math.abs(n));
+    
+    return n >= 0 ? value : 1/value;
+};
