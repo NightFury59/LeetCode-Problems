@@ -1,0 +1,10 @@
+const solveNQueens = (n) =>  [...queens(n)].map(sol => sol.map((x) => `${".".repeat(x)}Q${".".repeat(n - x - 1)}`));
+
+function* queens(n, i = 0, a = [], b = [], c = []) {
+  if (i === n) yield a;
+  for (let j = 0; j < n; j++) {
+    if (!a.includes(j) && !b.includes(i + j) && !c.includes(i - j)) {
+      yield* queens(n, i + 1, a.concat(j), b.concat(i + j), c.concat(i - j));
+    }
+  }
+}
