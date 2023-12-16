@@ -1,0 +1,33 @@
+function solve(arr) {
+
+    const solutionArray = [];
+    
+    let windowsMinValues = [...arr];
+    
+    solutionArray.push(Math.max(...arr));
+            
+    for (let windowSize = 2; windowSize <= arr.length; windowSize++) {
+        
+      let maxAmongMin = undefined;  
+        
+      for (let i = 0; i < windowsMinValues.length-1; i++) {
+          
+          if (windowsMinValues[i] > windowsMinValues[i+1]) {
+              windowsMinValues[i] = windowsMinValues[i+1];          
+          }
+          
+          if (!maxAmongMin || windowsMinValues[i] > maxAmongMin) {
+              maxAmongMin = windowsMinValues[i];
+          }
+          
+      }
+      
+      windowsMinValues.pop();
+                  
+      //  solutionArray.push(Math.max(...windowsMinValues));
+      solutionArray.push(maxAmongMin);
+            
+    } 
+    return solutionArray;
+
+}
