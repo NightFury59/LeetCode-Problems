@@ -1,0 +1,11 @@
+var trailingZeroes = function(n) {
+    let count = 0;
+    let nFac = 1;
+    nFac = BigInt(nFac);
+    for (let i = 1; i <= n; i++) nFac *= BigInt(i);
+    let s = nFac.toString();
+    for (let j = s.length - 1; j > -1; j--){
+        if (s[j] == "0") count++;
+        else return count;
+    }
+};
