@@ -1,0 +1,24 @@
+var updateBoard = function(b, c) {
+    if (b[c[0]][c[1]] === 'M') {
+        b[c[0]][c[1]] = 'X';
+        return b;
+    }
+    const queue = [c];
+    const dirs = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]];
+    while (queue.length) {
+        let e = queue.shift();
+        let mines = dirs.reduce((sum, d) => sum + !!(b[e[0] + d[0]] && b[e[0] + d[0]][e[1] + d[1]] === 'M'), 0);
+        if (mines) {
+            b[e[0]][e[1]] = '' + mines;
+        } else {
+            b[e[0]][e[1]] = 'B';
+            dirs.forEach(d => {
+                if (b[e[0] + d[0]] && b[e[0] + d[0]][e[1] + d[1]] === 'E') {
+                    b[e[0] + d[0]][e[1] + d[1]] = 'P';  // pending empty
+                    queue.push([e[0] + d[0], e[1] + d[1]]);
+                }
+            });
+        }
+    }
+    return b;
+};
