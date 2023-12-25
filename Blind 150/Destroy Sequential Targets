@@ -1,0 +1,19 @@
+var destroyTargets = function(nums, space) {
+    let map = {};
+    let max = -1;
+    for(let i=0; i<nums.length; i++){
+        map[nums[i]%space] = (map[nums[i]%space] || 0) + 1;
+        if(map[nums[i]%space] > max){
+            max = map[nums[i]%space];
+        }
+    }
+    
+    let ans = Infinity;
+    for(let i=0; i<nums.length; i++){
+        if(map[nums[i]%space] == max){
+            ans = Math.min(nums[i], ans)
+        }   
+    }
+    
+    return ans;
+};
