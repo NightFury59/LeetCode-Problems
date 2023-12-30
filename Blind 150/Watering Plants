@@ -1,0 +1,18 @@
+ var wateringPlants = function(plants, capacity) {
+    let result = 0
+    let c = capacity
+    let currentIndex = 0
+
+    do{
+        if(c == 0 || plants[currentIndex] > c){
+            result += 2*currentIndex
+            c = capacity
+        }else{
+            if(plants[currentIndex] !== 0) c -= plants[currentIndex]
+            currentIndex ++
+            result++
+        }
+    }while(currentIndex !== plants.length)
+
+    return result
+};
