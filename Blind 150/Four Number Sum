@@ -1,0 +1,34 @@
+function fourNumberSum(array, targetSum) {
+    const outputArr = [];
+  
+    // Sort the array in ascending order for efficient two-pointer approach
+    array.sort((a, b) => a - b);
+  
+    // Iterate through the array, leaving space for three other pointers
+    for (let i = 0; i < array.length - 3; i++) {
+        // Second pointer, starting from the next element after the first pointer
+        for (let j = i + 1; j < array.length - 2; j++) {
+            let left = j + 1;  // Third pointer
+            let right = array.length - 1;  // Fourth pointer
+
+            // Use two-pointer approach to find pairs that sum up to the remaining target
+            while (left < right) {
+                let currentSum = array[i] + array[j] + array[left] + array[right];
+
+                if (currentSum === targetSum) {
+                    outputArr.push([array[i], array[j], array[left], array[right]]);
+                    left++;
+                    right--;
+                } else if (currentSum < targetSum) {
+                    left++;
+                } else {
+                    right--;
+                }
+            }
+        }
+    }
+
+    return outputArr;
+}
+
+console.log(fourNumberSum([7, 6, 4, -1, 1, 2], 16));
