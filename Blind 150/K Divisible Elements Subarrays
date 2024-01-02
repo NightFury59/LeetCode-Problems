@@ -1,0 +1,22 @@
+var countDistinct = function(nums, k, p) {
+    let set = new Set();
+    let subArrCount = 0;
+    
+    for(let i=0; i<nums.length; i++){
+        let count = 0;
+        for(let j=i; j<nums.length; j++){            
+            if(nums[j] % p == 0){
+                count++;
+                if(count > k){
+                    break;
+                }
+            }
+            let s = nums.slice(i,j+1).join(',');
+            if(!set.has(s)){
+                subArrCount++;
+                set.add(s);
+            }
+        }
+    }
+    return subArrCount;
+};
