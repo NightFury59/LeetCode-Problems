@@ -1,0 +1,23 @@
+var minSideJumps = function(obstacles) { 
+let n = obstacles.length;
+    let curr = Array(4).fill(Number.MAX_SAFE_INTEGER)
+    let next = Array(4).fill(0)
+
+    for (let pos = n - 2; pos >= 0; pos--) {
+        for (let lane = 1; lane <= 3; lane++) {
+            if (obstacles[pos + 1] !== lane) {
+                curr[lane] = next[lane]
+            } else {
+                let ans = Number.MAX_SAFE_INTEGER;
+                for (let i = 1; i <= 3; i++) {
+                    if (i !== lane && obstacles[pos] !== i) {
+                        ans = Math.min(ans, 1 + next[i]);
+                    }
+                }
+                curr[lane] = ans;
+                next = curr
+            }
+        }
+    }
+    return Math.min(next[2], Math.min(1 + next[1], 1 + next[0]));
+}
