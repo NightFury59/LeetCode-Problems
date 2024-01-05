@@ -1,0 +1,28 @@
+var gameOfLife = function(board) {
+    const rows = board.length
+    const cols = board[0].length
+    const dirs = [[1, 0], [0, 1], [-1, 0], [0, -1], [1, 1], [-1, -1], [-1, 1], [1, -1]]
+    const updatedCoords = [] // [x, y, val]
+
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            let count = 0
+            for (const [x, y] of dirs) {
+                const nextRow = i + x
+                const nextCol = j + y
+                if (nextRow >= 0 && nextRow < rows && nextCol >= 0 && nextCol < cols) {
+                    if (board[nextRow][nextCol] === 1) count++
+                }
+            }
+            if ((count < 2 || count > 3) && board[i][j] === 1) {
+                updatedCoords.push([i, j, 0])
+            }
+            if (count === 3 && board[i][j] === 0) {
+                updatedCoords.push([i, j, 1])
+            }
+        }
+    }
+    for (const [i, j, val] of updatedCoords) {
+        board[i][j] = val
+    }
+};
