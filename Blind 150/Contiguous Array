@@ -1,0 +1,18 @@
+var findMaxLength = function(nums) {
+    let res = 0
+    
+    const counts = { 0: -1 }
+    let counter = 0
+
+    for (let i = 0; i < nums.length; i++) {
+        counter += nums[i] ? 1 : -1
+
+        if (counts.hasOwnProperty(counter)) {
+            res = Math.max(res, i - counts[counter])
+        } else {
+            counts[counter] = i
+        }
+    }
+
+    return res
+};
