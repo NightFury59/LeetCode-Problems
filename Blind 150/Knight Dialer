@@ -1,0 +1,38 @@
+var knightDialer = function(n) {
+  const MOD = 10 ** 9 + 7
+    const dp = Array.from({length: 10}, () => new Array(n).fill(1))
+    const jumps = [
+        [6, 4],
+        [8, 6],
+        [7, 9],
+        [4, 8],
+        [3, 9, 0],
+        [],
+        [1, 7, 0],
+        [2, 6],
+        [1, 3],
+        [4, 2]
+    ]
+
+    for(let i = 1; i < n; i++) {
+        jumps.forEach((jumpsIdxs, j) => {
+            let total = 0
+
+            if(jumpsIdxs.length) {
+                jumpsIdxs.forEach((jump) => {
+                    total = (total + dp[jump][i-1]) % MOD
+                })
+            }
+
+            dp[j][i] = total
+        })
+    }
+
+    let total = 0
+
+    for(let i = 0; i < 10; ++i) {
+        total = (total + dp[i][n-1]) % MOD
+    }
+
+    return total
+};
