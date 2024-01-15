@@ -1,0 +1,25 @@
+function Allocator(n) {
+    let a = Array(n).fill(-1), used = new Set();
+    return { allocate, free }
+    function allocate(size, id) {
+        let cnt = 0;
+        for (let i = 0; i < n; i++) {
+            a[i] == -1 ? cnt++ : cnt = 0; 
+            if (cnt == size) { 
+                for (let j = 0; j < cnt; j++) a[i-j] = id;
+                return i - size + 1;
+            }
+        }
+        return -1;
+    }
+    function free(id) {
+        let res = 0;
+        for (let i = 0; i < n; i++) {
+            if (a[i] == id) {
+                a[i] = -1;
+                res++;
+            }
+        }
+        return res;
+    }
+}
