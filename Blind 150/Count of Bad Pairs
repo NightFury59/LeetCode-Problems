@@ -1,0 +1,23 @@
+var countBadPairs = function(nums) {
+    if (nums.length <= 1) {
+        return 0;
+    }
+
+    let count = 0;
+    const diffCount = {};
+
+    for (let i = 0; i < nums.length; i++) {
+        const diff = nums[i] - i; 
+        if (diffCount[diff] !== undefined) {
+            count += diffCount[diff];
+            diffCount[diff]++;
+        } else {
+            diffCount[diff] = 1;
+        }
+    }
+
+    let n = nums.length
+    let totalPairs = n*(n-1)/2;
+
+    return totalPairs - count;
+};
