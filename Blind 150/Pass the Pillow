@@ -1,0 +1,8 @@
+var passThePillow = function(n, time) {
+    let count = Math.floor(time / (n-1));
+    let mod = time % (n-1);
+    if(count % 2 == 0) {
+        return 1 + mod
+    }
+    return n - mod
+};
