@@ -1,0 +1,22 @@
+var leastBricks = function(wall) {
+    const map = new Map();
+    let result = 0;
+
+    wall.forEach((row) => {
+        let sum = 0;
+
+        for(let n = 0; n < row.length - 1; n++) {
+            sum += row[n];
+
+            if(map.has(sum)) {
+                map.set(sum, map.get(sum) + 1);
+            } else {
+                map.set(sum, 1);
+            }
+
+            result = Math.max(result, map.get(sum));
+        }
+    })
+
+    return wall.length - result;
+};
