@@ -1,0 +1,24 @@
+var isHappy = function(n) {
+    let nString = n.toString()
+
+    return validate(nString, new Set())
+};
+
+function validate(nString, prevNums){
+
+    if ( nString === '1' ) return true
+
+    if ( prevNums.has(nString) ) return false
+
+    prevNums.add(nString)
+
+    let newN = 0
+
+    for ( let num of nString.split("") ){
+
+        newN += num ** 2
+    }
+
+
+    return validate(newN.toString(), prevNums)
+}
