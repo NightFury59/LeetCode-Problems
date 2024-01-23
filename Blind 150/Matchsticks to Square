@@ -1,0 +1,19 @@
+var makesquare = function(matchsticks) {
+    var sum = matchsticks.reduce((a,b) => {return a+b})
+    if (sum % 4 !== 0) return false
+    const oneSide = sum / 4
+    var left = oneSide, right = oneSide, top = oneSide, bottom = oneSide
+
+    matchsticks = matchsticks.sort((a,b) => b-a)
+
+    
+    const bt = (i, left, right, top, bottom) => {
+        if (i > matchsticks.length || left < 0 || right < 0 || top < 0 || bottom < 0) return false
+        
+        if (left + right + top + bottom === 0) return true
+
+        return bt(i+1, left - matchsticks[i], right, top, bottom) || bt(i+1, left, right - matchsticks[i], top, bottom) || bt(i+1, left, right, top - matchsticks[i], bottom) || bt(i+1, left, right, top, bottom - matchsticks[i])
+    }
+
+    return bt(0, left, right, top, bottom)
+};
