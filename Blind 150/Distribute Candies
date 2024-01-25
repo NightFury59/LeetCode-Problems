@@ -1,0 +1,5 @@
+var distributeCandies = function(candyType) {
+    candySet = new Set(candyType);
+
+    return Math.min(candySet.size, candyType.length/2);
+};
