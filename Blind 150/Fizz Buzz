@@ -1,9 +1,14 @@
 var fizzBuzz = function(n) {
-    return Array.from({length: n}, (_, i) => {
-        i += 1;
-        return i % 3 === 0 && i % 5 === 0 ? 'FizzBuzz'
-            : i % 3 === 0 ? 'Fizz' 
-            : i % 5 === 0 ? 'Buzz'
-            : `${i}`;
-    });
+  let res = []
+
+  for (let i = 1; i <= n; i++) {
+      let string = ''
+      if (i % 3 === 0) string += 'Fizz'
+      if (i % 5 === 0) string += 'Buzz'
+      
+      if (string === '') string += i
+      res.push(string)
+  }
+
+  return res
 };
