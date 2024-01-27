@@ -5,7 +5,7 @@ var subsets = function(nums) {
     while (stack.length) {
         const [prev, start] = stack.pop();
         for (let i = start; i < nums.length; i++) {
-            const newElem = [...prev, nums[i]];
+            const newElem = [...prev, nums[i]]
             stack.push([newElem, i + 1]);
             res.push(newElem);
         }
