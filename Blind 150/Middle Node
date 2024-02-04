@@ -1,0 +1,12 @@
+var middleNode = function(head) {
+    let slowNode = head;
+    let fastNode = head;
+
+    while(fastNode !== null && fastNode.next !== null) {
+        slowNode = slowNode.next;
+        fastNode = fastNode.next.next;
+    }
+
+    return slowNode;
+
+};
