@@ -1,0 +1,20 @@
+var sortList = function(head) {
+    const arr = [];
+    let node = head;
+
+    while (head) {
+        arr.push(head.val);
+        head = head.next;
+    }
+
+    arr.sort((a, b) => a - b);
+
+    head = node;
+
+    for (const n of arr) {
+        node.val = n;
+        node = node.next;
+    }
+
+    return head;
+};
