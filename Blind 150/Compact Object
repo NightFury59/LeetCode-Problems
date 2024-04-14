@@ -11,7 +11,7 @@ if (Array.isArray(obj)) {
   for (const key in obj) {
     const value = compactObject(obj[key]);
     if (Boolean(value)) {
-      compactedObj[key] = value;
+      compactedObj[key] = value
     }
   }
   return compactedObj;
