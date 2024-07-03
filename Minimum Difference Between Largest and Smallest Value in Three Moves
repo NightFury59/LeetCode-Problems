@@ -1,0 +1,56 @@
+// O(n) time | O(1) space
+
+var minDifference = function(nums) {
+    function shift(a, start) {
+        let last = a[a.length - 1];
+        for (let j = a.length - 1; j > start; j--) {
+            a[j] = a[j - 1];
+        }
+        if (a.length < 4) {
+            a[a.length] = last;
+        }
+    }
+    if (nums.length <= 4) {
+        return 0;
+    }
+        
+    let min4 = Array(4).fill(Number.MAX_SAFE_INTEGER);
+    let max4 = Array(4).fill(Number.MIN_SAFE_INTEGER);
+        
+    for (let num of nums) {
+        let added = false;
+        for (let j = 0; j < 4; j++) {
+            if (num < min4[j]) {
+                shift(min4, j);
+                min4[j] = num;
+                added = true;
+                break;
+            }
+        }
+        if (!added && min4[3] === Number.MAX_SAFE_INTEGER) {
+            min4[3] = num;
+        }
+    }
+        
+    for (let num of nums) {
+        let added = false;
+        for (let j = 0; j < 4; j++) {
+            if (num > max4[j]) {
+                shift(max4, j);
+                max4[j] = num;
+                added = true;
+                break;
+            }
+        }
+        if (!added && max4[3] === Number.MIN_SAFE_INTEGER) {
+            max4[3] = num;
+        }
+    }
+        
+    let ans = max4[0] - min4[0];
+    for (let i = 0; i < 4; i++) {
+        ans = Math.min(ans, max4[3 - i] - min4[i]);
+    }
+        
+    return ans;
+};
