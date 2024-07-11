@@ -1,0 +1,51 @@
+// O(n) time | O(n) space
+
+var reverseParentheses = function(s) {
+    // Initialize an empty stack to keep track of the indices of open parentheses
+    let stack = [];
+    
+    // Convert the string to an array to allow modification
+    let str = s.split('');
+
+    // Loop through each character in the array
+    for (let i = 0; i < str.length; i++) {
+        // If the character is an open parenthesis
+        if (str[i] === '(') {
+            // Push the index of the open parenthesis onto the stack
+            stack.push(i);
+        } 
+        // If the character is a close parenthesis
+        else if (str[i] === ')') {
+            // Pop the index of the last unmatched open parenthesis from the stack
+            let j = stack.pop();
+            // Reverse the substring between the open parenthesis and the close parenthesis
+            reverseSubarray(str, j + 1, i - 1);
+        }
+    }
+
+    // Build the final string excluding parantheses
+    let res = '';
+    for (let i = 0; i < str.length; i++) {
+        if (str[i] !== '(' && str[i] !== ')') {
+            res += str[i];
+        }
+    }
+
+    return res;
+};
+
+function reverseSubarray(arr, start, end) {
+    // Swap the elements from start to end
+    while (start < end) {
+        // Temporarily store the start element
+        let temp = arr[start];
+        // Set the start element to the end element
+        arr[start] = arr[end];
+        // Set the end element to the temporary start element
+        arr[end] = temp;
+        // Move the start index forward
+        start++;
+        // Move the end index backward
+        end--;
+    }
+}
