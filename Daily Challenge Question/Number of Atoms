@@ -1,0 +1,41 @@
+var countOfAtoms = function(formula) {
+    
+    const stack = [{}];
+    let i=0, n = formula.length, ans = '';
+    
+    const getAtomName = () => {
+        let st = i++;
+        while (i < n && formula[i] >= 'a' && formula[i] <= 'z') i++;
+        return formula.slice(st, i);
+    };
+
+    const getAtomCount = () => {
+        let st = i;
+        while (i < n && formula[i] >= '0' && formula[i] <= '9') i++;
+        return parseInt(formula.slice(st, i)) || 1;
+    }
+
+    while (i < n) {
+        if (formula[i] === '(') {
+            i++;
+            stack.push({});
+        } else if (formula[i] !== ')') {
+            const name = getAtomName();
+            const count = getAtomCount();
+            let mapL = stack.at(-1);
+            mapL[name] = mapL[name] || 0;
+            mapL[name] += count;
+        } else {
+            i++;
+            let mul = getAtomCount();
+            let mapR = stack.pop();
+            let mapL = stack.at(-1);
+            for (let name in mapR) {
+                mapL[name] = mapL[name] || 0;
+                mapL[name] += mapR[name] * mul;
+            }
+        }
+    }
+
+    return Object.entries(stack[0]).sort((a, b) => a[0].localeCompare(b[0])).reduce((r, [key, val]) => r += `${key}${val === 1 ? '': val}`, "");
+};
