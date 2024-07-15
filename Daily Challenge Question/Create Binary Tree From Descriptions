@@ -1,0 +1,28 @@
+// O(n) time | O(n) space
+
+var createBinaryTree = function(descriptions) {
+    let nodes = {};
+    let children = new Set();
+
+    for (let [par, child, isLeft] of descriptions) {
+        children.add(child);
+        if (!nodes[par]) {
+            nodes[par] = new TreeNode(par);
+        }
+        if (!nodes[child]) {
+            nodes[child] = new TreeNode(child);
+        }
+
+        if (isLeft) {
+            nodes[par].left = nodes[child];
+        } else {
+            nodes[par].right = nodes[child];
+        }
+    }
+
+    for (let [p, c, l] of descriptions) {
+        if (!children.has(p)) {
+            return nodes[p];
+        }
+    }
+};
