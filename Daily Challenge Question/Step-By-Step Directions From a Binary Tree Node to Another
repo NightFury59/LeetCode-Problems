@@ -1,0 +1,39 @@
+var getDirections = function(root, startValue, destValue) {
+    let st = [], ds = [];
+    let stTrack = [], dsTrack = [];
+
+    function inorder(root, arr, dir, arrDir) {
+        if(root == null) return;
+
+        let temp = root.val;
+        arr.push(temp);
+        arrDir.push(dir);
+
+
+        if(temp == startValue) {
+            st = arr.slice(0);
+            stTrack = new Array(arrDir.length).fill("U");
+        }
+        if(temp == destValue) {
+            ds = arr.slice(0);
+            dsTrack = arrDir.slice(0);
+        }
+
+        inorder(root.left, arr, "L", arrDir);
+        inorder(root.right, arr,"R", arrDir);
+        arr.pop();
+        arrDir.pop();
+    }
+    inorder(root, [], "", []);
+
+    let i = 0;
+    while(st[i] == ds[i]) {
+
+        st.shift();
+        ds.shift();
+        stTrack.shift();
+        dsTrack.shift();
+    }
+    return stTrack.join('') + dsTrack.join('');
+
+};
