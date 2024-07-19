@@ -1,0 +1,21 @@
+// O(m * n) time | O(1) space
+
+var luckyNumbers  = function(matrix) {
+    let luckyNumbers = [];
+
+    for (let i = 0; i < matrix.length; i++) {
+        let minElement = Math.min(...matrix[i]);
+        let index = matrix[i].indexOf(minElement);
+
+        let isLucky = true;
+
+        for (let j = 0; j < matrix.length; j++) {
+            if (matrix[j][index] > minElement) {
+                isLucky = false;
+                break;
+            }
+        }
+        if (isLucky) luckyNumbers.push(minElement);
+    }
+    return luckyNumbers;
+}; 
