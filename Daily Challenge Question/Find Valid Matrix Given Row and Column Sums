@@ -1,0 +1,25 @@
+// O(m * n) time | O(n) space
+
+function restoreMatrix(rowSum, colSum) {
+    // Get the number of rows and columns
+    const numRows = rowSum.length;
+    const numCols = colSum.length;
+    
+    // Initialize the result matrix with all zeros
+    const result = Array.from({ length: numRows }, () => Array(numCols).fill(0));
+    
+    // Traverse through the result matrix and fill it
+    for (let i = 0; i < numRows; i++) {
+        for (let j = 0; j < numCols; j++) {
+            // Find the minimum value between the current row sum and column sum
+            const minValue = Math.min(rowSum[i], colSum[j]);
+            // Assign this minimum value to the current cell
+            result[i][j] = minValue;
+            // Subtract the assigned value from the corresponding row and column sums
+            rowSum[i] -= minValue;
+            colSum[j] -= minValue;
+        }
+    }
+    
+    return result;
+}
