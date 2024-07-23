@@ -1,0 +1,21 @@
+var frequencySort = function(nums) {
+    // Step 1: Count the frequency of each element
+    const frequencyMap = new Map();
+    for (const num of nums) {
+        frequencyMap.set(num, (frequencyMap.get(num) || 0) + 1);
+    }
+
+    // Step 2: Sort the array based on frequency and value
+    return nums.sort((a, b) => {
+        const freqA = frequencyMap.get(a);
+        const freqB = frequencyMap.get(b);
+        
+        // If frequencies are different, sort by frequency
+        if (freqA !== freqB) {
+            return freqA - freqB;
+        }
+        
+        // If frequencies are the same, sort by value in descending order
+        return b - a;
+    });
+};
