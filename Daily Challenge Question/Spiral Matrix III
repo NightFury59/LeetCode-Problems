@@ -1,0 +1,19 @@
+var spiralMatrixIII = function(rows, cols, rStart, cStart) {
+    let dir = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+    let res = [];
+    let len = 0, d = 0;
+    
+    res.push ([rStart, cStart]);
+    while (res.length < rows * cols) {
+        if (d == 0 || d == 2) len++; 
+        for (let i = 0; i < len; i++) {
+            rStart += dir[d][0];
+            cStart += dir[d][1];
+            if (rStart >= 0 && rStart < rows && cStart >= 0 && cStart < cols) {
+                res.push([rStart, cStart]);
+            } 
+        }
+        d = (d+1) % 4;
+    }
+    return res;
+};
