@@ -1,0 +1,40 @@
+function isEven (num) {
+	return num % 2 === 0;
+}
+
+function isSumEqualTo15 (grid, row, col) {
+    const diagonals = [0, 0];
+
+    for(let i = 0; i <= 2; i++) {
+        let horizontalCondition = (grid[row + i][col] + grid[row + i][col + 1] + grid[row + i][col + 2]) === 15;
+        let verticalCondition = (grid[row][col + i] + grid[row+ 1][col + i] + grid[row + 2][col + i]) === 15;
+        diagonals[0] += grid[row+i][col+i];
+        diagonals[1] += grid[row+i][col+2-i];
+        if(!horizontalCondition || !verticalCondition) return false;
+    }
+
+    if(diagonals.find(sum => sum < 15)) {
+        return false;
+    }
+
+    return true;
+}
+
+var numMagicSquaresInside = function(grid) {
+    let total = 0;
+    for(let rowIdx = 0; rowIdx<= grid.length - 3; rowIdx++) {
+        for(let colIdx = 0; colIdx <= grid[0].length - 3; colIdx++) {
+            if(
+                grid?.[rowIdx + 1]?.[colIdx + 1] === 5 && 
+                isEven(grid[rowIdx][colIdx]) && 
+                isEven(grid[rowIdx + 2][colIdx]) && 
+                isEven(grid[rowIdx][colIdx + 2]) && 
+                isEven(grid[rowIdx + 2][colIdx + 2]) &&
+                isSumEqualTo15(grid, rowIdx, colIdx)
+            ) {
+                total++;
+            }
+        }
+    }
+    return total;
+}
