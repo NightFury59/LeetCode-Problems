@@ -1,0 +1,31 @@
+var insertGreatestCommonDivisors = function(head) {
+    const gcd = (num1, num2) => {
+        if(num1 === 0) return num2;
+
+        while(num2) {
+            const mod = num1 % num2;
+            num1 = num2;
+            num2 = mod;
+        }
+
+        return num1;
+    };
+
+    let prev = head;
+    let node = head.next;
+
+    while (node) {
+        // Create a new node with the GCD of prev and node values
+        const gcdValue = gcd(prev.val, node.val);
+        const newNode = new ListNode(gcdValue, node);
+
+        // Insert the new node between prev and node
+        prev.next = newNode;
+
+        // Move to the next pair of nodes
+        prev = node;
+        node = node.next;
+    }
+
+    return head;
+};
