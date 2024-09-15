@@ -1,0 +1,18 @@
+var findTheLongestSubstring = function(s) {
+    let mask = new Map([["a", 1], ["e", 2], ["i", 4], ["o", 8], ["u", 16]])
+    let d = new Map()
+    let cnt = 0
+    let ans = 0
+    for (let i= 0, n = s.length; i < n; i++) {
+        if (mask.has(s[i]))
+            cnt ^= mask.get(s[i])
+        if (cnt)
+            if (d.has(cnt))
+                ans = Math.max(ans, i - d.get(cnt))
+            else
+                d.set(cnt, i)
+        else
+            ans = i+1
+    }
+    return ans
+};
