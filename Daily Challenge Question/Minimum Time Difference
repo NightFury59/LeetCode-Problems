@@ -1,0 +1,23 @@
+var findMinDifference = function(timePoints) {
+    timePoints.sort();
+
+  let minDiff = Infinity;
+  let prevMinutes = null;
+  let firstMinutes = null;
+  
+  [firstHours, firstMinutes] = timePoints[0].split(':').map(Number);
+  firstMinutes = firstHours * 60 + firstMinutes;
+  prevMinutes = firstMinutes;
+
+  for (let i = 1; i < timePoints.length; i++) {
+    let [hours, minutes] = timePoints[i].split(':').map(Number);
+    let currentMinutes = hours * 60 + minutes;
+    
+    minDiff = Math.min(minDiff, currentMinutes - prevMinutes);
+    prevMinutes = currentMinutes;
+  }
+
+  minDiff = Math.min(minDiff, (1440 + firstMinutes) - prevMinutes);
+
+  return minDiff;
+};
