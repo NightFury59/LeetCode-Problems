@@ -1,0 +1,13 @@
+var largestNumber = function (nums) {
+
+    nums.sort((numa, numb) => {
+        let string1 = numa.toString();
+        let string2 = numb.toString();
+        return parseInt(string1 + string2) > parseInt(string2 + string1) ? -1 : 1
+    });
+
+    if (nums[0] == "0") return "0";
+
+    return nums.join("");
+
+};
