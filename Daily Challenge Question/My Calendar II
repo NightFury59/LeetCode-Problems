@@ -3,11 +3,6 @@ var MyCalendarTwo = function() {
     this.doubleBooked = []; 
 };
 
-/** 
- * @param {number} start 
- * @param {number} end
- * @return {boolean}
- */
 MyCalendarTwo.prototype.book = function(start, end) {
     for (let [s, e] of this.doubleBooked) {
         if (Math.max(start, s) < Math.min(end, e)) {
