@@ -1,0 +1,26 @@
+var MyCalendarTwo = function() {
+    this.single = [];
+    this.doubleBooked = []; 
+};
+
+/** 
+ * @param {number} start 
+ * @param {number} end
+ * @return {boolean}
+ */
+MyCalendarTwo.prototype.book = function(start, end) {
+    for (let [s, e] of this.doubleBooked) {
+        if (Math.max(start, s) < Math.min(end, e)) {
+            return false;
+        }
+    }
+    
+    for (let [s, e] of this.single) {
+        if (Math.max(start, s) < Math.min(end, e)) {
+            this.doubleBooked.push([Math.max(start, s), Math.min(end, e)]);
+        }
+    }
+    
+    this.single.push([start, end]);
+    return true;
+};
