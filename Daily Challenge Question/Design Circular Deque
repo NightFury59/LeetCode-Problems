@@ -1,0 +1,59 @@
+
+var MyCircularDeque = function(k) {
+    this.arr = []
+    this.max = k  
+};
+
+MyCircularDeque.prototype.insertFront = function(value) {
+    if (this.arr.length < this.max) {
+        this.arr.unshift(value)
+        return true
+    }
+    return false
+};
+
+MyCircularDeque.prototype.insertLast = function(value) {
+    if (this.arr.length < this.max) {
+        this.arr.push(value)
+        return true
+    }
+    return false
+};
+
+MyCircularDeque.prototype.deleteFront = function() {
+    if (this.arr.length > 0) {
+        this.arr.shift()
+        return true
+    }
+    return false
+};
+
+MyCircularDeque.prototype.deleteLast = function() {
+    if (this.arr.length > 0) {
+        this.arr.pop()
+        return true
+    }
+    return false
+};
+
+MyCircularDeque.prototype.getFront = function() {
+    if (this.arr.length > 0) {
+        return this.arr[0]
+    }
+    return -1
+};
+
+MyCircularDeque.prototype.getRear = function() {
+    if (this.arr.length > 0) {
+        return this.arr[this.arr.length - 1]
+    }
+    return -1
+};
+
+MyCircularDeque.prototype.isEmpty = function() {
+    return this.arr.length == 0
+};
+
+MyCircularDeque.prototype.isFull = function() {
+    return this.arr.length == this.max
+};
