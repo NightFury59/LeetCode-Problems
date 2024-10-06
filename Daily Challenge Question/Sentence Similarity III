@@ -1,0 +1,20 @@
+var areSentencesSimilar = function(s1, s2) {
+    if(s1==s2)return true
+    s1=s1.split(' ')
+    s2=s2.split(' ')
+    let s1a=0
+    let s1b=s1.length-1
+    let s2c=0
+    let s2d=s2.length-1
+    while(s1[s1a]===s2[s2c]){
+        s1a++
+        s2c++
+    }
+    while(s1[s1b]==s2[s2d]){
+        s1b--
+        s2d--
+    }
+    if(s1b<s1a || s2d<s2c)return true
+    return false
+
+};
