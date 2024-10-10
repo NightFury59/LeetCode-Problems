@@ -1,0 +1,17 @@
+var maxWidthRamp = function(nums) {
+    let dec = [0]
+    for(let i=0;i<nums.length;i++){
+        if(nums[i]<nums[dec.at(-1)]){
+            dec.push(i)
+        }
+    }
+    let max=0
+    for(let i=nums.length-1;i>0;i--){
+        if(nums[i]>=nums[dec.at(-1)]){
+            max = Math.max(max,i-dec.at(-1))
+            dec.pop()
+            i++
+        }
+    }
+    return max
+};
