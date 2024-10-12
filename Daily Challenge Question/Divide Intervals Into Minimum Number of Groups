@@ -1,0 +1,15 @@
+var minGroups = function (intervals) {
+  if (intervals.length === 0) return 0;
+
+  let rooms = 0
+  let e = 0
+
+  const startTimes = intervals.map((interval) => interval[0]).sort((a, b) => a - b)
+  const endTimes = intervals.map((interval) => interval[1]).sort((a, b) => a - b)
+
+  for (let i = 0; i < intervals.length; i++) {
+    if (startTimes[i] <= endTimes[e]) rooms++
+    else e++
+  }
+  return rooms
+};
