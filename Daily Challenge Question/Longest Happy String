@@ -1,0 +1,31 @@
+var longestDiverseString = function(a, b, c) {
+    let pq = [];
+    if (a > 0) pq.push([a, 'a']);
+    if (b > 0) pq.push([b, 'b']);
+    if (c > 0) pq.push([c, 'c']);
+    
+    pq.sort((x, y) => y[0] - x[0]);
+    
+    let res = '';
+    
+    while (pq.length) {
+        let [maxCnt, maxChar] = pq.shift();
+        
+                if (res.length >= 2 && res.slice(-2) === maxChar.repeat(2)) {
+            if (!pq.length) break;
+            let [secCnt, secChar] = pq.shift();
+            res += secChar;
+            secCnt--;
+            if (secCnt > 0) pq.push([secCnt, secChar]);
+            pq.push([maxCnt, maxChar]);
+        } else {
+            res += maxChar;
+            maxCnt--;
+            if (maxCnt > 0) pq.push([maxCnt, maxChar]);
+        }
+        
+        pq.sort((x, y) => y[0] - x[0]);
+    }
+    
+    return res;
+};
