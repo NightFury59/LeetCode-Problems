@@ -1,0 +1,24 @@
+var maximumSwap = function(num) {
+  const digits = [...num.toString()].map(Number);
+  const last = digits.length - 1;
+  let left = last;
+  let right = last;
+  let maxIndex = last;
+
+  for (let i = digits.length - 2; i >= 0; i--) {
+    const digit = digits[i];      
+    const max = digits[maxIndex]; 
+
+    if (digit < max) {
+      left = i;
+      right = maxIndex;
+    } else if (digit > max) {
+      maxIndex = i;
+    }
+  }
+  if (left >= right) return num;
+
+  [digits[right], digits[left]] = [digits[left], digits[right]];
+
+  return Number(digits.join(''));
+}
