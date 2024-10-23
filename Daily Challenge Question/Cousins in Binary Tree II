@@ -1,0 +1,45 @@
+var replaceValueInTree = function(root) {
+    let q = [root];
+    let levelSum = [];
+
+    while (q.length > 0) {
+        let levelSize = q.length;
+        let sum = 0;
+        for (let i = 0; i < levelSize; i++) {
+            let node = q.shift();
+            sum += node.val;
+            if (node.left) q.push(node.left);
+            if (node.right) q.push(node.right);
+        }
+        levelSum.push(sum);
+    }
+
+    q = [root];
+    root.val = 0;
+    let level = 0;
+
+    while (q.length > 0) {
+        let levelSize = q.length;
+        let nextLevelSum = level + 1 < levelSum.length ? levelSum[level + 1] : 0;
+
+        for (let i = 0; i < levelSize; i++) {
+            let node = q.shift();
+            let childSum = 0;
+
+            if (node.left) {
+                childSum += node.left.val;
+                q.push(node.left);
+            }
+            if (node.right) {
+                childSum += node.right.val;
+                q.push(node.right);
+            }
+
+            if (node.left) node.left.val = nextLevelSum - childSum;
+            if (node.right) node.right.val = nextLevelSum - childSum;
+        }
+        level++;
+    }
+
+    return root;
+};
