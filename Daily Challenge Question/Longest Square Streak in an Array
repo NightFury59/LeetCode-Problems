@@ -1,0 +1,17 @@
+var longestSquareStreak = function(nums) {
+    const set = new Set(nums.map(num => BigInt(num)));
+    let maxStreak = 0;
+
+    for (let num of nums) {
+        let count = 0;
+        let current = BigInt(num);
+        while (set.has(current)) {
+            count++;
+            current *= current;
+            if (current > BigInt(Number.MAX_SAFE_INTEGER)) break; // Avoid overflow
+        }
+        maxStreak = Math.max(maxStreak, count);
+    }
+
+    return maxStreak >= 2 ? maxStreak : -1;
+};
