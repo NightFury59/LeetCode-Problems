@@ -1,0 +1,33 @@
+var minimumMountainRemovals = function(nums) {
+    let n = nums.length;
+    let lis = new Array(n).fill(0);
+    let lds = new Array(n).fill(0);
+
+    for (let i=0; i<n; i++) {
+        let temp = 0;
+        for (let x=0; x<=i; x++) {
+            if (nums[x] < nums[i]) {
+                temp = Math.max(temp, lis[x]);
+            }
+        }
+        lis[i] = temp+1;
+    }
+    for (let i=n-1; i>=0; i--) {
+        let temp = 0;
+        for (let x=n-1; x>=i; x--) {
+            if (nums[x] < nums[i]) {
+                temp = Math.max(temp, lds[x]);
+            }
+        }
+        lds[i] = temp+1;
+    }
+    let maxLen = 0;
+    for (let i=1; i<n-1; i++) {
+        if (lds[i] != 1 && lis[i] != 1) {
+            maxLen = Math.max(maxLen, lis[i] + lds[i]-1);
+        }
+    }
+    
+    return n-maxLen;
+
+};
