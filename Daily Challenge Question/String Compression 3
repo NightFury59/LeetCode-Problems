@@ -1,0 +1,19 @@
+var compressedString = function(word) {
+    let comp = "";
+    let ind = 0;
+
+    while (ind < word.length) {
+        let cnt = 0;
+        const currChar = word[ind];
+
+        while (ind < word.length && word[ind] === currChar && cnt < 9) {
+            cnt++;
+            ind++;
+        }
+
+        comp += cnt.toString() + currChar;
+    }
+
+    return comp;
+};
+
