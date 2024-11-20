@@ -1,0 +1,18 @@
+var takeCharacters = function(s, k) {
+    const abcMap = { a: 0, b: 0, c: 0 };
+    let mins = s.length;
+    let l = 0;
+
+    for (let i = 0; i < s.length; i++) {
+        abcMap[s[i]]++;
+    }
+    if (abcMap.a < k || abcMap.b < k || abcMap.c < k) return -1;
+
+    for (let i = 0; i < s.length; i++) {
+        abcMap[s[i]]--;
+
+        while (abcMap.a < k || abcMap.b < k || abcMap.c < k) abcMap[s[l++]]++;
+        mins = Math.min(mins, s.length - (i - l + 1));
+    }
+    return mins;
+};
