@@ -1,0 +1,49 @@
+const countUnguarded = (m, n, guards, walls) => {
+    const grid = Array.from({ length: m }, () => Array(n).fill(0));
+    
+    for(const [x, y] of walls) 
+        grid[x][y] = 2;
+    
+    for(const [x, y] of guards)
+        grid[x][y] = 1;
+    
+    for(const [x, y] of guards) {
+        
+        for(let i = y + 1; i < n; ++i) {
+            if(grid[x][i] === 1 || grid[x][i] === 2)
+                break;
+            
+            grid[x][i] = -1;
+        }
+
+        for(let i = y - 1; i >= 0; --i) {
+            if(grid[x][i] === 1 || grid[x][i] === 2)
+                break;
+            
+            grid[x][i] = -1;
+        }
+        
+        for(let i = x + 1; i < m; ++i) {
+            if(grid[i][y] === 1 || grid[i][y] === 2)
+                break;
+            
+            grid[i][y] = -1;
+        }
+        
+        for(let i = x - 1; i >= 0; --i) {
+            if(grid[i][y] === 1 || grid[i][y] === 2)
+                break;
+            
+            grid[i][y] = -1;
+        }
+    }
+    
+    let unguarded = 0;
+    
+    for(const r of grid)
+        for(const c of r)
+            if(c === 0)
+                ++unguarded;
+    
+    return unguarded;
+};
