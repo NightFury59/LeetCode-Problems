@@ -1,0 +1,16 @@
+var findChampion = function(n, edges) {
+    let arr = new Array(n).fill(0);
+    for (let i=0; i<edges.length; i++) {
+        let temp = edges[i][1];
+        arr[temp]++;
+    }
+    let res = -1, count = 0;
+    for (let i=0; i<arr.length; i++) {
+        if(arr[i] == 0) {
+            res = i;
+            count++;
+        }
+        if(count>1) return -1;
+    }
+    return res;
+};
