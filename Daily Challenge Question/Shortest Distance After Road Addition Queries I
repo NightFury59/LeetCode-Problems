@@ -1,0 +1,39 @@
+class Solution {
+    dijkstra(n, adj, src, dest) {
+        const dist = Array(n).fill(Infinity);
+        const pq = new MinPriorityQueue({ priority: x => x[0] });
+
+        dist[src] = 0;
+        pq.enqueue([0, src]);
+
+        while (!pq.isEmpty()) {
+            const [d, u] = pq.dequeue().element;
+
+            for (const [v, weight] of adj.get(u) || []) {
+                if (dist[u] + weight < dist[v]) {
+                    dist[v] = dist[u] + weight;
+                    pq.enqueue([dist[v], v]);
+                }
+            }
+        }
+
+        return dist[dest] === Infinity ? -1 : dist[dest];
+    }
+
+    shortestDistanceAfterQueries(n, queries) {
+        const adj = new Map();
+        for (let i = 0; i < n - 1; ++i) {
+            if (!adj.has(i)) adj.set(i, []);
+            adj.get(i).push([i + 1, 1]);
+        }
+
+        const ans = [];
+        for (const [u, v] of queries) {
+            if (!adj.has(u)) adj.set(u, []);
+            adj.get(u).push([v, 1]);
+            ans.push(this.dijkstra(n, adj, 0, n - 1));
+        }
+
+        return ans;
+    }
+}
