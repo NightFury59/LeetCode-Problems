@@ -1,0 +1,50 @@
+const DIRS = [[-1, 0], [0, -1], [0, 1], [1, 0]];
+
+/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+function minimumObstacles(grid) {
+    const Y = grid.length;
+    const X = grid[0].length;
+    const queues = [[[0, 0]], [[Y-1, X-1]]];
+    const visited = new Array(Y);
+    for (let y = 0; y < Y; ++y) {
+        visited[y] = new Array(X).fill(0);
+    }
+    visited[0][0] = 1;
+    visited[Y-1][X-1] = 2;
+
+    let i = 1;
+    let moves = -1;
+    do {
+        i ^= 1;
+        const nextQ = [];
+        const bit = 1 << i;
+        for (const [y, x] of queues[i]) {
+            if (visited[y][x] - bit) {
+                return Math.max(0, moves);
+            }
+            for (const [dy, dx] of DIRS) {
+                const y2 = y + dy;
+                const x2 = x + dx;
+                if (y2 < 0 || y2 >= Y || x2 < 0 || x2 >= X) {
+                    continue;
+                }
+                if (visited[y2][x2] & bit) {
+                    continue;
+                }
+                visited[y2][x2] += bit;
+                if (grid[y2][x2]) {
+                    nextQ.push([y2, x2]);
+                } else {
+                    queues[i].push([y2, x2]);
+                }
+            }
+        }
+        queues[i] = nextQ;
+        ++moves;
+    } while (queues[i].length > 0);
+
+    return -1;
+};
