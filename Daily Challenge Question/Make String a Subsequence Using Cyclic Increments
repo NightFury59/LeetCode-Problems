@@ -1,0 +1,33 @@
+function canMakeSubsequence(str1, str2) {
+    const len1 = str1.length;
+    const len2 = str2.length;
+
+    let pointerStr2 = 0;
+    let pointerStr1 = 0;
+
+    let countMatches = 0;
+
+    for (let i = 0; i < len2; i++) {
+        let charStr2 = str2.charAt(i);
+        let originalChar = charStr2;
+
+        if (charStr2 === 'a') {
+            charStr2 = 'z';
+        } else {
+            charStr2 = String.fromCharCode(charStr2.charCodeAt(0) - 1);
+        }
+
+        while (pointerStr1 < len1) {
+            let charStr1 = str1.charAt(pointerStr1);
+            if (charStr1 === charStr2 || charStr1 === originalChar) {
+                countMatches++;
+                pointerStr1++;
+                break;
+            } else {
+                pointerStr1++;
+            }
+        }
+    }
+
+    return countMatches === len2;
+}
