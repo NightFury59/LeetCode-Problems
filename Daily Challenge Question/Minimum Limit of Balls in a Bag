@@ -1,0 +1,24 @@
+var minimumSize = function(nums, maxOperations) {
+    const canDivide = (nums, maxOperations, penalty) => {
+        let operations = 0;
+        for (let num of nums) {
+            if (num > penalty) {
+                operations += Math.floor((num - 1) / penalty);
+                if (operations > maxOperations) return false;
+            }
+        }
+        return true;
+    };
+
+    let left = 1, right = Math.max(...nums), result = right;
+    while (left <= right) {
+        let mid = Math.floor((left + right) / 2);
+        if (canDivide(nums, maxOperations, mid)) {
+            result = mid;
+            right = mid - 1;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return result;
+};
