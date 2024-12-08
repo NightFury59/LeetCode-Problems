@@ -1,0 +1,25 @@
+var maxTwoEvents = function(events) {
+    events.sort((a, b) => a[0]-b[0]);
+    let res = 0, suffix = new Array(events.length);
+    let max = 0;
+    for(let i = events.length-1; i >= 0; i--){
+        max = Math.max(max, events[i][2]);
+        suffix[i] = max;
+    }
+    for(let i = 0; i < events.length; i++){
+        res = Math.max(res, events[i][2]);
+        let l = i+1, e = events.length-1;
+        while(l < e){
+            let mid = (l+e) >> 1;
+            if(events[mid][0] > events[i][1]){
+                e = mid;
+            }else{
+                l = mid+1;
+            }
+        }
+        if(events[e][0] > events[i][1]){
+            res = Math.max(res, events[i][2] + suffix[e]);
+        }
+    }
+    return res;
+};
