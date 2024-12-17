@@ -1,0 +1,39 @@
+var repeatLimitedString = function(s, repeatLimit) {
+    let count = {};
+    let array = Array.from(s);
+
+    array.forEach(char => {
+        count[char] = (count[char] || 0) + 1;
+    });
+
+    let sortedKeys = Object.keys(count).sort((a, b) => b.localeCompare(a));
+    let result = [];
+
+    while (sortedKeys.length > 0) {
+        let char = sortedKeys.shift();
+        let repeat = Math.min(count[char], repeatLimit);
+
+        for (let i = 0; i < repeat; i++) {
+            result.push(char);
+        }
+        count[char] -= repeat;
+
+        if (count[char] > 0) {
+            if (sortedKeys.length > 0) {
+                let nextChar = sortedKeys.shift();
+                result.push(nextChar);
+                count[nextChar]--;
+
+                if (count[nextChar] > 0) {
+                    sortedKeys.unshift(nextChar);
+                }
+
+                sortedKeys.unshift(char);
+            } else {
+                break;
+            }
+        }
+    }
+
+    return result.join('');
+};
