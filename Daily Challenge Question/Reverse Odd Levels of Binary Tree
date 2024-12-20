@@ -1,0 +1,27 @@
+var reverseOddLevels = function(root) {
+    let lvl = 0;
+    let q = [root];
+
+    while (q.length > 0) {
+        let size = q.length;
+        let nodes = [];
+        let temp = [...q];
+        for (let i = 0; i < size; i++) {
+            let node = q.shift();
+            if (node.left) q.push(node.left);
+            if (node.right) q.push(node.right);
+            nodes.push(node.val);
+        }
+        if (lvl % 2 !== 0) {
+            nodes.reverse();
+            let i = 0;
+            while (size-- > 0) {
+                let node = temp.shift();
+                node.val = nodes[i];
+                i++;
+            }
+        }
+        lvl++;
+    }
+    return root;
+};
