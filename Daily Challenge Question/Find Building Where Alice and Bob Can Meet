@@ -1,0 +1,37 @@
+const constructSegTree = (input, res, low, high, curr) => {
+    if(low == high) {
+        res[curr] = input[low]
+        return res
+    }
+    const mid = Math.floor((low + high) / 2)
+    constructSegTree(input, res, low, mid, 2 * curr + 1)
+    constructSegTree(input, res, mid + 1, high, 2 * curr + 2)
+    res[curr] = Math.max(res[2 * curr + 1], res[2 * curr + 2])
+    return res
+}
+
+const rangeQuery = (tree, target, qLow, qHigh, low, high, curr) => {
+    if(qLow <= low && qHigh >= high && low == high && tree[curr] > target) return low
+    if(qLow > high || qHigh < low || tree[curr] <= target) return Infinity
+    const mid = Math.floor((low + high) / 2)
+    return Math.min(rangeQuery(tree, target, qLow, qHigh, low, mid, 2 * curr + 1),
+        rangeQuery(tree, target, qLow, qHigh, mid + 1, high, 2 * curr + 2))
+}
+
+var leftmostBuildingQueries = function (heights, queries) {
+    const n = heights.length 
+    const segTree = constructSegTree(heights, [], 0, n - 1, 0)
+    const res = []
+    for(let [a,b] of queries) {
+        if (a > b) {
+            [a, b] = [b, a]
+        }
+        if(a == b || heights[b] > heights[a]) {
+            res.push(b)
+        } else {
+            const ind = rangeQuery(segTree, heights[a], b, n - 1, 0, n - 1, 0)
+            res.push(ind == Infinity ? -1 : ind)
+        }
+    }
+    return res
+};
