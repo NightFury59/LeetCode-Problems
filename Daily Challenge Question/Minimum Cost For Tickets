@@ -1,0 +1,36 @@
+/**
+ * @param {number[]} days
+ * @param {number[]} costs
+ * @return {number}
+ */
+var mincostTickets = function(days, costs) {
+    const dp = new Array(366).fill(-1);
+
+    const solve = (ind) => {
+        if (ind >= days.length) return 0;
+        if (dp[ind] !== -1) return dp[ind];
+
+        const oneDay = costs[0] + solve(ind + 1);
+
+        const sevenDayIndex = lowerBound(days, days[ind] + 7);
+        const sevenDays = costs[1] + solve(sevenDayIndex);
+
+        const thirtyDayIndex = lowerBound(days, days[ind] + 30);
+        const thirtyDays = costs[2] + solve(thirtyDayIndex);
+
+        dp[ind] = Math.min(oneDay, Math.min(sevenDays, thirtyDays));
+        return dp[ind];
+    };
+
+    const lowerBound = (arr, target) => {
+        let low = 0, high = arr.length;
+        while (low < high) {
+            const mid = Math.floor((low + high) / 2);
+            if (arr[mid] >= target) high = mid;
+            else low = mid + 1;
+        }
+        return low;
+    };
+
+    return solve(0);
+};
