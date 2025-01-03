@@ -1,0 +1,12 @@
+var waysToSplitArray = function(nums) {
+    let end = 0, start = 0;
+    for(let i=0; i<nums.length; i++)
+        end += nums[i];
+    let res = 0;
+    for(let i=0; i<nums.length-1; i++) {
+        start += nums[i];
+        end -= nums[i];
+        if (start >= end) res++;
+    }    
+    return res;  
+};
