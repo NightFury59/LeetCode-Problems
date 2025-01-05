@@ -1,0 +1,28 @@
+var shiftingLetters = function(s, shifts) {
+    // Initialize a list to store cumulative shifts with an extra space
+    const cShifts = new Array(s.length + 1).fill(0);
+    let cSum = 0;
+    const charList = s.split('');
+
+    // Process each shift operation
+    for (const [start, end, direction] of shifts) {
+        if (direction === 0) {
+            cShifts[start] -= 1;
+            cShifts[end + 1] += 1;
+        } else {
+            cShifts[start] += 1;
+            cShifts[end + 1] -= 1;
+        }
+    }
+
+    // Apply the cumulative shifts to each character in the string
+    for (let index = 0; index < s.length; index++) {
+        cSum += cShifts[index];
+
+        // Calculate the new character code with wrapping around the alphabet
+        const newCharCode = (((charList[index].charCodeAt(0) + cSum - 97) % 26) + 26) % 26 + 97;
+        charList[index] = String.fromCharCode(newCharCode);
+    }
+
+    return charList.join('');
+};
