@@ -1,0 +1,14 @@
+class Solution {
+    canConstruct(s, k) {
+        if (k > s.length) return false;
+        const charCount = new Array(26).fill(0);
+        for (let c of s) {
+            charCount[c.charCodeAt(0) - 'a'.charCodeAt(0)]++;
+        }
+        let oddCount = 0;
+        for (let i = 0; i < 26; i++) {
+            if (charCount[i] % 2 === 1) oddCount++;
+        }
+        return oddCount <= k && k <= s.length;
+    }
+}
