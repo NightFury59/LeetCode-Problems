@@ -1,0 +1,21 @@
+var minimumLength = function(s) {
+    const freqMap = {};
+    
+    for (let c of s) {
+        freqMap[c] = (freqMap[c] || 0) + 1;
+    }
+
+    let deletions = 0;
+
+    for (let count of Object.values(freqMap)) {
+        if (count > 2) {
+            if (count % 2 === 0) {
+                deletions += (count - 2);
+            } else {
+                deletions += (count - 1);
+            }
+        }
+    }
+
+    return s.length - deletions;
+};
