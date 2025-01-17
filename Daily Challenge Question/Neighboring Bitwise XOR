@@ -1,0 +1,9 @@
+var doesValidArrayExist = function(derived) {
+    let total = 0;
+    
+    for (let num of derived) {
+        total ^= num; 
+    }
+
+    return total === 0;
+};
