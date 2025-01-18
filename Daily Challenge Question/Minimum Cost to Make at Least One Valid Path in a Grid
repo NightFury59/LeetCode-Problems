@@ -1,0 +1,55 @@
+var minCost = function(grid) {
+    var m = grid.length, n = grid[0].length;
+    var dp2d = Array.from({length:m}, ()=>new Uint8Array(n).fill(m+n-2));
+    dp2d[0][0]=0;
+    var queues = Array.from({length:m+n-1},()=>[]);
+    queues[0].push([0,0]);
+    var pointer = [0,0];
+
+    while (pointer[0]<queues.length){
+        if (pointer[1]==queues[pointer[0]].length){
+            pointer[0]++;
+            pointer[1]=0;
+            continue;
+        }
+
+        var r = queues[pointer[0]][pointer[1]][0], c = queues[pointer[0]][pointer[1]][1];
+        var cost = dp2d[r][c];
+
+        if (c<n-1){
+            var costR=(grid[r][c]==1)?cost:cost+1;
+            if (costR<dp2d[r][c+1]){
+                dp2d[r][c+1]=costR;
+                queues[costR].push([r,c+1]);
+            }
+        }
+
+        if (c>0){
+            var costL=(grid[r][c]==2)?cost:cost+1;
+            if (costL<dp2d[r][c-1]){
+                dp2d[r][c-1]=costL;
+                queues[costL].push([r,c-1]);
+            }
+        }
+
+        if (r<m-1){
+            var costD=(grid[r][c]==3)?cost:cost+1;
+            if (costD<dp2d[r+1][c]){
+                dp2d[r+1][c]=costD;
+                queues[costD].push([r+1,c]);
+            }
+        }
+
+        if (r>0){
+            var costU=(grid[r][c]==4)?cost:cost+1;
+            if (costU<dp2d[r-1][c]){
+                dp2d[r-1][c]=costU;
+                queues[costU].push([r-1,c]);
+            }
+        }
+
+        pointer[1]++;
+    }
+
+    return dp2d[m-1][n-1];
+};
