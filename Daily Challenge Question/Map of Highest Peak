@@ -1,0 +1,28 @@
+var highestPeak = function(isWater) {
+    let n = isWater.length, m = isWater[0].length;
+    let q = [];
+    
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < m; j++) {
+            if (isWater[i][j] === 1) {
+                q.push([i, j]);
+                isWater[i][j] = 0;
+            } else {
+                isWater[i][j] = -1;
+            }
+        }
+    }
+    
+    let directions = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+    while (q.length > 0) {
+        let [x, y] = q.shift();
+        for (let [dx, dy] of directions) {
+            let nx = x + dx, ny = y + dy;
+            if (nx >= 0 && ny >= 0 && nx < n && ny < m && isWater[nx][ny] === -1) {
+                isWater[nx][ny] = isWater[x][y] + 1;
+                q.push([nx, ny]);
+            }
+        }
+    }
+    return isWater;
+};
