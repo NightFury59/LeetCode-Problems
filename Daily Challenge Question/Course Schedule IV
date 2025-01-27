@@ -1,0 +1,37 @@
+var checkIfPrerequisite = function(numCourses, prerequisites, queries) {
+    const adj = Array.from({length: numCourses}, () => []);
+    const indegree = new Array(numCourses).fill(0);
+    
+    for(let p of prerequisites) {
+        adj[p[0]].push(p[1]);
+        indegree[p[1]]++;
+    }
+    
+    const q = [];
+    for(let i = 0; i < numCourses; i++) {
+        if(indegree[i] === 0) {
+            q.push(i);
+        }
+    }
+    
+    const mp = new Map();
+    for(let i = 0; i < numCourses; i++) {
+        mp.set(i, new Set());
+    }
+    
+    while(q.length > 0) {
+        const curr = q.shift();
+        for(let next of adj[curr]) {
+            mp.get(next).add(curr);
+            for(let pre of mp.get(curr)) {
+                mp.get(next).add(pre);
+            }
+            indegree[next]--;
+            if(indegree[next] === 0) {
+                q.push(next);
+            }
+        }
+    }
+    
+    return queries.map(([u, v]) => mp.get(v).has(u));
+};
