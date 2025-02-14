@@ -1,0 +1,12 @@
+class ProductOfNumbers {
+    a = [1];
+
+    add(x) {
+        if (x !== 0) this.a.push(x * this.a.at(-1));
+        else this.a = [1]; // faster then this.a.length = 1;
+    }
+
+    getProduct(k) {
+        return k < this.a.length ? this.a.at(-1) / this.a.at(-k - 1) : 0;
+    }
+}
