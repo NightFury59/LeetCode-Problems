@@ -1,0 +1,13 @@
+class FindElements {
+    constructor(root) {
+        this.set = new Set();
+        const dfs = (node, val) => {
+            if (!node) return;
+            this.set.add(val);
+            dfs(node.left, val = val * 2 + 1);
+            dfs(node.right, val + 1);
+        };   
+        dfs(root, 0);
+    }
+    find = (target) => this.set.has(target);
+}
