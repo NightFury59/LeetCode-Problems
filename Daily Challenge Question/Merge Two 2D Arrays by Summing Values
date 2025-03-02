@@ -1,0 +1,24 @@
+var mergeArrays = function (nums1, nums2) {
+    let result = new Map()
+    let result1 = []
+   
+    for (let i = 0; i < Math.max(nums1.length, nums2.length); i++) {
+
+        if (nums1[i]) {
+            if (result.has(nums1[i][0])) {
+                result.set(nums1[i][0], result.get(nums1[i][0]) + nums1[i][1])
+            } else result.set(nums1[i][0], nums1[i][1])
+        }
+
+        if (nums2[i]) {
+            if (result.has(nums2[i][0])) {
+                result.set(nums2[i][0], result.get(nums2[i][0]) + nums2[i][1])
+            } else result.set(nums2[i][0], nums2[i][1])
+        }
+
+    }
+    for (let [key, value] of result) {
+        result1.push([key, value])
+    }
+    return result1.sort((a, b) => a[0] - b[0])
+};
