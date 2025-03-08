@@ -1,0 +1,22 @@
+var minimumRecolors = function(blocks, k) {
+    let White = 0;
+    let n = blocks.length;
+
+    
+    for (let j = 0; j < k; j++) {
+        if (blocks[j] === 'W') 
+            White++;
+    }
+    let ans = White;
+
+    
+    for (let j = k; j < n; j++) {
+        if (blocks[j] === 'W') 
+            White++; 
+        if (blocks[j - k] === 'W') 
+            White--;  
+        ans = Math.min(ans, White);
+    }
+
+    return ans;
+};
