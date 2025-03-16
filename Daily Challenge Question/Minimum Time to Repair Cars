@@ -1,0 +1,27 @@
+var repairCars = function(ranks, cars) {
+    let left = 1;
+    let right = Math.min(...ranks) * cars * cars;
+    let result = right;
+    
+    function canRepairAllCars(ranks, cars, timeLimit) {
+        let totalCars = 0;
+        for (let rank of ranks) {
+            const maxCars = Math.floor(Math.sqrt(timeLimit / rank));
+            totalCars += maxCars;
+            if (totalCars >= cars) { return true; }
+        }
+        return false;
+    }
+    
+    while (left <= right) {
+        const mid = Math.floor((left + right) / 2);
+        if (canRepairAllCars(ranks, cars, mid)) {
+            result = mid;
+            right = mid - 1;
+        }
+        else {
+            left = mid + 1;
+        }
+    }
+    return result    
+};
