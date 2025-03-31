@@ -1,0 +1,15 @@
+var putMarbles = function(weights, k) {
+    if (k === 1) return 0;
+
+    let pairSum = [];
+    for (let i = 0; i < weights.length - 1; i++) {
+        pairSum.push(weights[i] + weights[i + 1]);
+    }
+
+    pairSum.sort((a, b) => a - b);
+
+    let min = pairSum.slice(0, k - 1).reduce((a, b) => a + b, 0);
+    let max = pairSum.slice(- (k - 1)).reduce((a, b) => a + b, 0);
+
+    return max - min;
+};
