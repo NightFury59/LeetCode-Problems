@@ -1,0 +1,17 @@
+var countGood = function(nums, k) {
+    let l = 0, r = 0, ans = 0, count = 0;
+    let mp = new Map();
+    while (r < nums.length) {
+        let val = nums[r];
+        mp.set(val, (mp.get(val) || 0) + 1);
+        count += mp.get(val) - 1;
+        while (l < nums.length && (count - (mp.get(nums[l]) - 1)) >= k) {
+            mp.set(nums[l], mp.get(nums[l]) - 1);
+            count -= mp.get(nums[l]);
+            l++;
+        }
+        if (count >= k) ans += (l + 1);
+        r++;
+    }
+    return ans;
+};
